@@ -1,0 +1,22 @@
+name: Snake Commit
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'  # runs daily at 00:00 UTC
+
+jobs:
+  snake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make snake commit
+        run: |
+          echo $RANDOM >> snake.txt
+          git config --local user.name "khachatryan-dev"
+          git config --local user.email "arkhachat@gmail.com"
+          git add snake.txt
+          git commit -m "snake commit $(date +'%Y-%m-%d')" || echo "No changes"
+          git push
